@@ -21,20 +21,32 @@
 <body>
     <main class="d-flex mx-2 justify-content-center my-3">
         <div id="app">
-            
+
             <h3>Aggiungi una nota </h3>
-            <div class="d-flex justify-content-between my-2">
-            <input type="text" v-model="todo" class="rounded">
-            
-            <button @click="storeTodo" class="btn btn-secondary btn-sm"><i class="fa-solid fa-plus"></i></button> 
+
+            <div class="d-flex justify-content-between my-2" v-if="!isEditing">
+                
+                <input type="text" v-model="todo" class="rounded">
+                <button @click="storeTodo" class="btn btn-secondary btn-sm"><i class="fa-solid fa-plus"></i></button>
+
             </div>
+
+            <div class="d-flex justify-content-between my-2" v-else>
+                
+                <input type="text" v-model="todo" class="rounded">
+                <button @click="updateTodo" class="btn btn-secondary btn-sm" ><i class="fa-solid fa-pen-to-square"></i></button>
+            </div>
+
             <ul class="list-group">
-                <li class="list-group-item d-flex justify-content-between align-items-center" v-for="(todo, index) in todos">
+                <li class="list-group-item d-flex justify-content-between align-items-center" v-for="(todo, index) in todos" v-bind:class="{ 'doneTodo': isChecked}">
+                    <label>
+                    <input class="form-check-input me-1" type="checkbox" value="" id="flexCheckDefault" v-model ="isChecked">
+                    </label>
                     {{ todo }}
                     <div>
-                    <button class="border-0 mx-2 bg-light"><i class="fa-solid fa-pencil"></i></button>
-                    <button @click="deleteTodo(index)" class="border-0 bg-light"><i class="fa-solid fa-trash-can"></i></button>
-                  </div>
+                        <button @click="editTodo(index, todo)" class="border-0 mx-2 bg-light"><i class="fa-solid fa-pencil"></i></button>
+                        <button @click="deleteTodo(index)" class="border-0 bg-light"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
                 </li>
 
 
@@ -48,11 +60,3 @@
 </body>
 
 </html>
-<!-- <button type="button" class="btn btn-secondary" v-moodel="aggiungiVoce" @click="aggiungiVoce"><i
-        class="fa-solid fa-plus"></i></button> -->
-
-<!-- <div class="d-flex">
-    <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox">
-    {{ todoList.testoLista }}
-</div>
-<div><i class="fa-solid fa-trash-can"></i></div> -->
